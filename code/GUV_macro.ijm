@@ -59,10 +59,12 @@ function guvIntensity(smoothing, sensitivity, bandwidth, measure, first_frame, l
 	run("Select None");
 	run("Clear Results"); 
 	Overlay.remove();
-	setBatchMode(true);
+	//setBatchMode(true);
 	id = getImageID;
+	print("Segment all GUV");
 	segmentAllGUVs(smoothing/100.0*3.0, 4.0*(100-sensitivity)/100.0, bandwidth, first_frame, last_frame);
 	selectImage(id);
+	print("Measure intensity");
 	measureIntensities(bandwidth, measure, first_frame, last_frame);
 	
 	// Clean up created ROIs	
@@ -76,29 +78,35 @@ function guvIntensity(smoothing, sensitivity, bandwidth, measure, first_frame, l
 	
 	Stack.setFrame(1);
 	Stack.setChannel(1);
-	setBatchMode(false);
+	//setBatchMode(false);
 	print("Done");
 }
 
-// Segmentation of all images
 function segmentAllGUVs(smoothing, threshold, bandwidth, first_frame, last_frame) {	
+	/* Segmentation of all images of the sequence */
 	
 	id = getImageID;	
-	run("Duplicate...", "duplicate channels=1");
+	print("Segment channel 1");
+	run("Duplicate...", "title=ch1 duplicate channels=1");
 	id1 = getImageID;
-	
 	segment(smoothing, threshold);
+	
 	selectImage(id);
-	run("Duplicate...", "duplicate channels=2");
+	print("Segment channel 2");
+	run("Duplicate...", "title=ch2 duplicate channels=2");
 	id2 = getImageID;	
 	segment(smoothing, threshold);
 	
 	imageCalculator("OR stack", id1, id2);	
+	
 	getOutlines(bandwidth);	
+	
 	setThreshold(128,255);
-		
+
+	print("Create selection at each frame");
 	for (t = first_frame; t <= last_frame; t++) {
 		Stack.setFrame(t);
+		print(t, getValue("Max"));
 		run("Create Selection");
 		roiManager("Add");		
 	}
@@ -106,10 +114,11 @@ function segmentAllGUVs(smoothing, threshold, bandwidth, first_frame, last_frame
 	selectImage(id2);close();
 	selectImage(id);
 	//selectWindow("ROI Manager");	
-	}
 }
 
-function segment(scale, lambda) {	
+
+function segment(scale, lambda) {
+	print("segment with scale:"+scale+"px and threshold:"+lambda);
 	id1 = getImageID;
 	run("32-bit");
 	run("Square Root", "stack");
@@ -124,16 +133,18 @@ function segment(scale, lambda) {
 	threshold = mean + lambda * std;
 	setThreshold(threshold, max);	
 	run("Convert to Mask", "method=Default background=Default");			
-	smoothContour(20,5,3);	
-	}
+	//smoothContour(20,5,3);	
 }
 
 function getOutlines(size) {
+	/*
+	 * Get the outline of the GUV
+	 */
 	id = getImageID;
 	run("Duplicate...", "duplicate ");
 	id1 = getImageID;	
 	run("Fill Holes", "stack");	
-	smoothContour(20,5,3);	
+	//smoothContour(20,5,3);	
 	run("Duplicate...", "duplicate ");
 	id2 = getImageID;
 	run("Minimum...", "radius="+size+" stack");	

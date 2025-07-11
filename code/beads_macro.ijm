@@ -119,8 +119,6 @@ function measureAreaVsIntensity() {
 	Plot.update();
 }
 
-Array.print(Array.slice(newArray(1,2,3,4,5,6,7,8),1,3))
-
 function createRingROI(ring_width) {
 	getDimensions(width, height, channels, slices, frames);
 	newImage("Untitled", "8-bit black", width, height, 1);	
@@ -128,7 +126,12 @@ function createRingROI(ring_width) {
 	setForegroundColor(255,255,255);
 	run("Line Width...", "line="+2*ring_width);
 	roiManager("Show All");
-	run("Create Selection");
+	rois_list = newArray( roiManager("count"));
+	for (i = 0; i < roiManager("count"); i++) {
+		rois_list[i] = i;
+	}
+	roiManager("select", rois_list);
+	roiManager("combine");
 	run("Enlarge...", "enlarge="+ring_width);
 	roiManager("Draw");	
 	setThreshold(128,255);
