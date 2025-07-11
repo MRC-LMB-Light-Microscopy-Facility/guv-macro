@@ -1,3 +1,5 @@
+<img width="191" height="20" alt="image" src="https://github.com/user-attachments/assets/434e7196-2d76-4041-962a-f19dfcd9d3f6" />
+
 # Beads and giant unilamellar vesicles (GUVs)
 
 This repository contains two ImageJ macros used for the quantification of intensity of fluorescent beads and GUVs.
