@@ -56,6 +56,9 @@ The spherical GUVs appear as bright rings in the images and their motion is very
 
 An example dataset is in `data/GUV_demo.tif`.
 
+The processing of the file should take less then a minute.
+
+
 ### Usage
 - Open the original GUV assay files with Fiji using Bio-format plugin and select open as hyperstack leaving everything else unchecked.
 - Select several ROIs (draw a circle around a GUV membrane in the lissamine-rhodamine channel and press 't' to add it to ROI Manager)
