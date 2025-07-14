@@ -14,7 +14,8 @@ This repository contains two ImageJ macros used for the quantification of intens
 
 ## Requirements
 - Fiji available from https://imagej.net/software/fiji/, tested on
-    - version 1.54p
+    - 2.3.0/1.54p
+    - 2.3.0/1.53q
 - Microsoft Excel
 
 ## Installation
