@@ -20,12 +20,16 @@ This repository contains two ImageJ macros used for the quantification of intens
 ## Installation
 Download and extract the zip file with the code and demo images.
 
+The installation should take less and five minute.
+
 
 ## Intensity quantification of beads
 This macro measure the fluorescence intensity of the beads surface in 2D for each channel and the diameter of the beads. 
 
 ###  Dataset
 The data are multi-channel, single plane images. An example dataset is in `data/beads_demo.czi`.
+
+The processing of the file should take less then a minute.
 
 ### Usage
 - Open the original files in Fiji
